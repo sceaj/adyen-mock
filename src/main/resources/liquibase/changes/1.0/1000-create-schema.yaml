@@ -1,0 +1,47 @@
+ databaseChangeLog:
+   - changeSet:  
+       id:  sceaj_1  
+       author:  sceaj  
+       changes:  
+         - createTable:  
+             tableName: cards  
+             columns:  
+               - column:  
+                   name: record_id
+                   type: int
+                   autoIncrement: true
+                   constraints:
+                     primaryKey: true
+                     nullable: false
+               - column:
+                   name: external_key
+                   type: uuid
+                   constraints:
+                     nullable: false
+               - column:  
+                   name: card_number  
+                   type: varchar(24)
+                   constraints:
+                     nullable: false  
+               - column:  
+                   name: cvv
+                   type: varchar(8)
+                   constraints:  
+                     nullable: false  
+               - column:
+                   name: expiration_month  
+                   type: int  
+                   constraints:
+                     nullable: false
+                     check: (expiration_month >= 1 and expiration_month <= 12)
+               - column:
+                   name: expiration_year
+                   type: int
+                   constraints:
+                     nullable: false
+                     check: (expiration_year >= 1900)
+               - column:
+                   name: name_on_card
+                   type: varchar(40)
+                   constraints:
+                     nullable: false

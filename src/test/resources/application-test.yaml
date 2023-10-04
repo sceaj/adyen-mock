@@ -1,0 +1,3 @@
+spring:
+  datasource.url: jdbc:tc:mariadb:11.1.2:///adyenmock
+  sql.init.mode: always

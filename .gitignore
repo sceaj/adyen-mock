@@ -7,6 +7,16 @@
 # BlueJ files
 *.ctxt
 
+# Docker runtime files
+mnt/mariadb/
+
+# Eclipse workspace files (that have local environment specific content)
+.classpath
+.settings/*.prefs
+
+# MacOS extended filesystem attributes file
+.DS_Store
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -22,3 +32,5 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+/.gradle/
+/build/

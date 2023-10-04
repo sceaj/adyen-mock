@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: classpath:/liquibase/changes/1.0/1000-create-schema.yaml

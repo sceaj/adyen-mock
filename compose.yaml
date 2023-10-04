@@ -1,0 +1,12 @@
+services:
+  mariadb:
+    image: 'mariadb:latest'
+    environment:
+      - 'MARIADB_DATABASE=adyenmock'
+      - 'MARIADB_PASSWORD=adyen_dev'
+      - 'MARIADB_ROOT_PASSWORD=r00tr00t'
+      - 'MARIADB_USER=adyen'
+    ports:
+      - '3306:3306'
+    volumes:
+      - './mnt/mariadb:/var/lib/mysql'
