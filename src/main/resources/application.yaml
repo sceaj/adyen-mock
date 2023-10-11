@@ -1,3 +1,6 @@
+adyen-mock:
+  webhooks.hmac-key: 53D73140BB57D4799ED9DB5E83AA658093D46A5BDBAE9182BAC9DE573B04C40C
+
 spring:
   datasource:
     url: jdbc:mariadb://localhost:3306/adyenmock

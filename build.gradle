@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	implementation 'commons-codec:commons-codec:1.16.0'
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -66,3 +67,7 @@ tasks.named('test', Test) {
         exceptionFormat = "full"
     }
 }
+
+bootRun {
+   jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+ }
