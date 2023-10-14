@@ -13,6 +13,7 @@ mnt/mariadb/
 # Eclipse workspace files (that have local environment specific content)
 .classpath
 .settings/*.prefs
+bin/
 
 # MacOS extended filesystem attributes file
 .DS_Store
