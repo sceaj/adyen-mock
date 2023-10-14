@@ -16,6 +16,7 @@ mnt/mariadb/
 bin/
 
 # Gradle Wrapper
+build/
 !gradle/wrapper/gradle-wrapper.jar
 
 # MacOS extended filesystem attributes file

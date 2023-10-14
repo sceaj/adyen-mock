@@ -22,7 +22,7 @@ class CardNumberUtilsSpecification extends Specification {
 		'test case: 7' | [4,9,3,6,1,9,8,9,3,5,2,7,3,8,2]   | 4
 	}
 	
-	def "Validate Luhn testCase"(int[] testPayload, boolean expectedResult) {
+	def "Validate Luhn for array testCase"(int[] testPayload, boolean expectedResult) {
 		
 		expect:
 		expectedResult == CardNumberUtils.luhnCheck(testPayload)
@@ -38,7 +38,7 @@ class CardNumberUtilsSpecification extends Specification {
 		'test case: 7' | [4,9,3,6,1,9,8,9,3,5,2,7,3,8,2,4]   | true
 	}
 
-	def "Validate Luhn testCase"(String testPayload, boolean expectedResult) {
+	def "Validate Luhn for string testCase"(String testPayload, boolean expectedResult) {
 	
 		expect:
 		expectedResult == CardNumberUtils.luhnCheck(testPayload)
