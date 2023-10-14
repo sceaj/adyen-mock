@@ -15,6 +15,9 @@ mnt/mariadb/
 .settings/*.prefs
 bin/
 
+# Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar
+
 # MacOS extended filesystem attributes file
 .DS_Store
 
