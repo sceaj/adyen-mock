@@ -3,12 +3,10 @@ package sceaj.adyenmock.api.v1.model.payment;
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Builder
 @Data
 public class Amount {
 
     private String currency;
-    private BigDecimal value;
+    private Long value;
 }

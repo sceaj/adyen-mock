@@ -5,14 +5,25 @@ import org.springframework.stereotype.Service;
 import sceaj.adyenmock.api.v1.model.payment.AdditionalData;
 import sceaj.adyenmock.api.v1.model.payment.PaymentRequest;
 import sceaj.adyenmock.api.v1.model.payment.PaymentResponse;
+import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod;
+import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethodRequest;
+
+import java.util.List;
 
 @Slf4j
 @Service
-public class PaymentService {
+public class CheckoutPaymentsService {
 
     public PaymentResponse processPayment(PaymentRequest paymentRequest) {
         log.info("Processing the request...");
         return buildResponse();
+    }
+
+    public List<PaymentMethod> getAvailablePaymentMethods(PaymentMethodRequest request) {
+        log.info("paymentMethod={}", request);
+        PaymentMethod cardMethod = new PaymentMethod("Cards", "scheme");
+        PaymentMethod paypalMethod = new PaymentMethod("PayPal", "paypal");
+        return List.of(cardMethod, paypalMethod);
     }
 
     private PaymentResponse buildResponse() {
