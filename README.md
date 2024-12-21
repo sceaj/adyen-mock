@@ -31,8 +31,9 @@ In response, you should see something similar to:
 ### Planned
 
 * Mimics (portions of) the Adyen system
-- Enables development and testing without access to real Adyen system
-- Provides control of various configurations and data, enabling recreation of actual production issues
+- Enables development and testing without access to real Adyen system.
+- Supports Adyen webhooks.
+- Provides control of various configurations and data, enabling recreation of actual production issues.
 * Allows passthrough mode to proxy requests to Adyen test system.
 - Defaults to not passthrough.
 - Implements throttling in passthrough mode.
