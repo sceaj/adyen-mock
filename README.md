@@ -45,5 +45,7 @@ In response, you should see something similar to:
         * Configurable Delay (0 seconds - 3 days)
         * Configurable Retries (0 - 100)
         * Configurable Terminal Failure (Max Retries)
-
+    * Authentication
+        * Simulates Adyen Authentication (Configureable)
+ 
 
