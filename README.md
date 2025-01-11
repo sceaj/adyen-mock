@@ -39,5 +39,11 @@ In response, you should see something similar to:
     * Implements throttling in passthrough mode.
     * Enables validation of the Adyen mock definitions with the Adyen test environment definitions.
 * Provides easy extension to support multiple versions of the Adyen APIs (goal, i.e. maybe it's not "easy")
+* Adyen Functionality
+    * Checkout API - multiple versions
+    * Webhooks
+        * Configurable Delay (0 seconds - 3 days)
+        * Configurable Retries (0 - 100)
+        * Configurable Terminal Failure (Max Retries)
 
 
