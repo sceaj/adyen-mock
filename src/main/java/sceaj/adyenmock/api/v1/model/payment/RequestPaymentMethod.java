@@ -1,10 +1,14 @@
 package sceaj.adyenmock.api.v1.model.payment;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RequestPaymentMethod {
 
     private String type;
@@ -13,3 +17,4 @@ public class RequestPaymentMethod {
     private String encryptedExpiryYear;
     private String encryptedSecurityCode;
 }
+

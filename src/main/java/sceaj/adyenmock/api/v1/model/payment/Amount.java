@@ -1,10 +1,12 @@
 package sceaj.adyenmock.api.v1.model.payment;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
+@Builder
+@AllArgsConstructor
 public class Amount {
 
     private String currency;
