@@ -20,6 +20,7 @@ public class WebhookEntity {
     private Long webhookId;
 
     @NotBlank
+    @Lob
     private String payload;
 
     @NotNull
@@ -29,5 +30,12 @@ public class WebhookEntity {
     private WebhookStatus status;
 
     private Integer retries;
+
+    @NotNull
+    private String returnUrl;
+
+    public Integer incrementRetries() {
+        return ++retries;
+    }
 
 }

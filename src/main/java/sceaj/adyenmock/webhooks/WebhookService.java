@@ -3,6 +3,7 @@ package sceaj.adyenmock.webhooks;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import sceaj.adyenmock.api.v1.model.payment.PaymentRequest;
 import sceaj.adyenmock.api.v1.model.payment.RequestPaymentMethod;
@@ -21,24 +22,30 @@ import java.util.UUID;
 public class WebhookService {
 
     private final WebhookRepository webhookRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+
+    @Value("${webhook.base-interval}")
+    private int baseInterval;
 
     public WebhookService(WebhookRepository webhookRepository) {
         this.webhookRepository = webhookRepository;
+        this.objectMapper = new ObjectMapper();
     }
 
     public void createWebhook(PaymentRequest payment) throws JsonProcessingException {
         NotificationRequestItem notificationRequestItem = buildNotificationRequestItem(payment);
         WebhookPayload payload = prepareWebhookPayload(notificationRequestItem);
-        WebhookEntity webhookEntity = buildWebhook(payload);
+        WebhookEntity webhookEntity = buildWebhook(payload, payment.getReturnUrl());
         webhookRepository.save(webhookEntity);
     }
 
-    private WebhookEntity buildWebhook(WebhookPayload payload) throws JsonProcessingException {
+    private WebhookEntity buildWebhook(WebhookPayload payload, String returnUrl) throws JsonProcessingException {
         WebhookEntity webhookEntity = new WebhookEntity();
         webhookEntity.setPayload(objectMapper.writeValueAsString(payload));
-        webhookEntity.setDeliveryDate(LocalDateTime.now().plusMinutes(5));
+        webhookEntity.setDeliveryDate(LocalDateTime.now().plusSeconds(baseInterval));
         webhookEntity.setStatus(WebhookStatus.PENDING);
+        webhookEntity.setRetries(0);
+        webhookEntity.setReturnUrl(returnUrl);
         return webhookEntity;
     }
 

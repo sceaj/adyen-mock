@@ -13,5 +13,9 @@ spring:
       hibernate.dialect: org.hibernate.dialect.MariaDBDialect
   liquibase:
     change-log: classpath:/liquibase/db.changelog-master.yaml
-    
-    
+
+webhook:
+  base-interval: 60
+  retries:
+    max-attempts: 3
+    interval: 30

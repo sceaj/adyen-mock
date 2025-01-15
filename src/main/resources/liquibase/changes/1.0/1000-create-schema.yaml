@@ -61,7 +61,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: payload
-                  type: varchar(255)
+                  type: text
                   constraints:
                     nullable: false
               - column:
@@ -78,7 +78,13 @@ databaseChangeLog:
                   name: retries
                   type: int
                   constraints:
-                    nullable: true
+                    nullable: false
+                    check: (retries >= 0)
+              - column:
+                  name: return_url
+                  type: text
+                  constraints:
+                    nullable: false
   - changeSet:
       id: moraveis_2
       author: moraveis

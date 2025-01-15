@@ -20,6 +20,8 @@ class WebhookRepositorySpecification extends SpringContextSpecification {
         entity.deliveryDate = LocalDateTime.of(2025, 1, 1, 12, 1, 30)
         entity.payload = 'some information in here'
         entity.status = WebhookStatus.PENDING
+        entity.returnUrl = "http://localhost/confirmation"
+        entity.retries = 0
 
         when:
         def savedWebhook = repository.save(entity)
