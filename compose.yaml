@@ -8,5 +8,5 @@ services:
       - 'MARIADB_USER=adyen'
     ports:
       - '3306:3306'
-#    volumes:
-#      - './mnt/mariadb:/var/lib/mysql'
+    volumes:
+      - './mnt/mariadb:/var/lib/mysql'
