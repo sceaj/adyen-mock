@@ -77,9 +77,7 @@ public class WebhookScheduler {
     }
 
     private long calculateDelay(int retry) {
-        long delay = (long) Math.pow(2, retry) * baseInterval;
-        log.info("Delay in seconds = {}", delay);
-        return delay;
+        return (long) Math.pow(2, retry) * baseInterval;
     }
 
 }

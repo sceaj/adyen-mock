@@ -122,3 +122,16 @@ databaseChangeLog:
               - column:
                   name: type
                   value: "scheme"
+  - changeSet:
+      id: moraveis_4
+      author: moraveis
+      changes:
+        - createIndex:
+            clustered: true
+            columns:
+              - column:
+                  name: delivery_date
+                  descending: true
+            indexName: idx_delivery_date
+            schema: public
+            tableName: webhooks

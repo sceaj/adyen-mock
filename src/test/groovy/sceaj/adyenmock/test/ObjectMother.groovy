@@ -3,11 +3,11 @@ package sceaj.adyenmock.test
 import sceaj.adyenmock.api.v1.model.Card
 import sceaj.adyenmock.api.v1.model.payment.Amount
 import sceaj.adyenmock.api.v1.model.payment.PaymentRequest
-import sceaj.adyenmock.api.v1.model.payment.RequestPaymentMethod
+import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod
 
 class ObjectMother {
 
-    static def buildPaymentRequest() {
+    static buildPaymentRequest() {
         PaymentRequest request = new PaymentRequest()
         request.merchantAccount = 'merchant_account_reference'
         request.reference = '123456'
@@ -17,14 +17,14 @@ class ObjectMother {
         request
     }
 
-    static def buildRequestPaymentMethod() {
-        RequestPaymentMethod requestPaymentMethod = new RequestPaymentMethod()
-        requestPaymentMethod.type = 'scheme'
-        requestPaymentMethod.encryptedCardNumber = '4111111111111111'
-        requestPaymentMethod.encryptedExpiryMonth = '03'
-        requestPaymentMethod.encryptedExpiryYear = '2030'
-        requestPaymentMethod.encryptedSecurityCode = '737'
-        requestPaymentMethod
+    static buildRequestPaymentMethod() {
+        PaymentMethod request = new PaymentMethod()
+        request.type = 'scheme'
+        request.encryptedCardNumber = '4111111111111111'
+        request.encryptedExpiryMonth = '03'
+        request.encryptedExpiryYear = '2030'
+        request.encryptedSecurityCode = '737'
+        request
     }
 
     static buildCard(props = null) {

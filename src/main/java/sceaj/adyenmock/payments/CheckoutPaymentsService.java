@@ -1,13 +1,11 @@
 package sceaj.adyenmock.payments;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sceaj.adyenmock.api.v1.model.payment.AdditionalData;
 import sceaj.adyenmock.api.v1.model.payment.PaymentRequest;
 import sceaj.adyenmock.api.v1.model.payment.PaymentResponse;
 import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod;
-import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethodRequest;
 import sceaj.adyenmock.paymentmethods.PaymentMethodMapper;
 import sceaj.adyenmock.persistence.PaymentMethodTypeRepository;
 import sceaj.adyenmock.persistence.entities.PaymentMethodEntity;
@@ -29,13 +27,13 @@ public class CheckoutPaymentsService {
         this.paymentMethodTypeMapper = paymentMethodTypeMapper;
     }
 
-    public PaymentResponse processPayment(PaymentRequest request) throws JsonProcessingException {
-        log.info("Processing the request...");
+    public PaymentResponse processPayment(PaymentRequest request) {
+        log.info("Processing payment request {}", request.getReference());
         webhookService.createWebhook(request);
         return buildResponse(request);
     }
 
-    public List<PaymentMethod> getAvailablePaymentMethods(PaymentMethodRequest request) {
+    public List<PaymentMethod> getAvailablePaymentMethods(PaymentMethod request) {
         log.info("Retrieving payment methods configured for merchant={}", request.getMerchantAccount());
         List<PaymentMethodEntity> paymentMethodTypeEntities = paymentMethodTypeRepository.findAll();
         return paymentMethodTypeEntities.stream().map(paymentMethodTypeMapper::fromEntity).toList();

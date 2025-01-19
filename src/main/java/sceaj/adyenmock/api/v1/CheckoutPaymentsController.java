@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import sceaj.adyenmock.api.v1.model.payment.PaymentRequest;
 import sceaj.adyenmock.api.v1.model.payment.PaymentResponse;
 import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod;
-import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethodRequest;
 import sceaj.adyenmock.payments.CheckoutPaymentsService;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class CheckoutPaymentsController {
     }
 
     @PostMapping(path = "/paymentMethods", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<PaymentMethod> getAvailablePaymentMethods(@RequestBody PaymentMethodRequest request) {
+    public List<PaymentMethod> getAvailablePaymentMethods(@RequestBody PaymentMethod request) {
         log.info("Find all available payment methods for merchantAccount={}", request.getMerchantAccount());
         return checkoutPaymentsService.getAvailablePaymentMethods(request);
     }

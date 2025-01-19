@@ -1,7 +1,6 @@
 package sceaj.adyenmock.payments
 
-
-import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethodRequest
+import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod
 import sceaj.adyenmock.paymentmethods.PaymentMethodMapperImpl
 import sceaj.adyenmock.persistence.PaymentMethodTypeRepository
 import sceaj.adyenmock.persistence.entities.PaymentMethodEntity
@@ -19,7 +18,7 @@ class CheckoutPaymentServiceSpecification extends Specification {
 
     def 'Payment Methods - find all available payment methods'() {
         given:
-        PaymentMethodRequest request = PaymentMethodRequest.builder().merchantAccount("merchant_account").build()
+        PaymentMethod request = PaymentMethod.builder().merchantAccount("merchant_account").build()
 
         and:
         PaymentMethodEntity paymentMethodEntity = new PaymentMethodEntity()

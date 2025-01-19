@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod;
 
 @Data
 @Builder
@@ -13,7 +14,7 @@ public class PaymentRequest {
 
     private Amount amount;
     private String merchantAccount;
-    private RequestPaymentMethod paymentMethod;
+    private PaymentMethod paymentMethod;
     private String reference;
     private String returnUrl;
 }

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import sceaj.adyenmock.api.v1.model.payment.PaymentRequest;
-import sceaj.adyenmock.api.v1.model.payment.RequestPaymentMethod;
+import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod;
 import sceaj.adyenmock.api.v1.model.webhook.NotificationRequestItem;
 import sceaj.adyenmock.api.v1.model.webhook.WebhookPayload;
 import sceaj.adyenmock.persistence.WebhookRepository;
@@ -32,20 +32,26 @@ public class WebhookService {
         this.objectMapper = new ObjectMapper();
     }
 
-    public void createWebhook(PaymentRequest payment) throws JsonProcessingException {
+    public void createWebhook(PaymentRequest payment) {
         NotificationRequestItem notificationRequestItem = buildNotificationRequestItem(payment);
         WebhookPayload payload = prepareWebhookPayload(notificationRequestItem);
         WebhookEntity webhookEntity = buildWebhook(payload, payment.getReturnUrl());
         webhookRepository.save(webhookEntity);
     }
 
-    private WebhookEntity buildWebhook(WebhookPayload payload, String returnUrl) throws JsonProcessingException {
+    private WebhookEntity buildWebhook(WebhookPayload payload, String returnUrl) {
         WebhookEntity webhookEntity = new WebhookEntity();
-        webhookEntity.setPayload(objectMapper.writeValueAsString(payload));
         webhookEntity.setDeliveryDate(LocalDateTime.now().plusSeconds(baseInterval));
         webhookEntity.setStatus(WebhookStatus.PENDING);
         webhookEntity.setRetries(0);
         webhookEntity.setReturnUrl(returnUrl);
+
+        try {
+            webhookEntity.setPayload(objectMapper.writeValueAsString(payload));
+        } catch (JsonProcessingException jex) {
+            throw new WebhookProcessingException(String.format("Failed to process payment with reference %s", payload.getNotificationItems().get(0).getPspReference()));
+        }
+
         return webhookEntity;
     }
 
@@ -71,7 +77,7 @@ public class WebhookService {
                 .build();
     }
 
-    private String buildNotificationItemReason(String authorizationCode, RequestPaymentMethod paymentMethod) {
+    private String buildNotificationItemReason(String authorizationCode, PaymentMethod paymentMethod) {
         String cardNumberInfo = paymentMethod.getEncryptedCardNumber().substring(11, 15);
         return authorizationCode + cardNumberInfo + paymentMethod.getEncryptedExpiryMonth() + paymentMethod.getEncryptedExpiryYear();
     }
