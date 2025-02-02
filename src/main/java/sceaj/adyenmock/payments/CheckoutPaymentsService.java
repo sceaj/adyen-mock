@@ -6,7 +6,10 @@ import sceaj.adyenmock.api.v1.model.payment.AdditionalData;
 import sceaj.adyenmock.api.v1.model.payment.PaymentRequest;
 import sceaj.adyenmock.api.v1.model.payment.PaymentResponse;
 import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethod;
-import sceaj.adyenmock.api.v1.model.paymentmethod.PaymentMethodRequest;
+import sceaj.adyenmock.paymentmethods.PaymentMethodMapper;
+import sceaj.adyenmock.persistence.PaymentMethodTypeRepository;
+import sceaj.adyenmock.persistence.entities.PaymentMethodEntity;
+import sceaj.adyenmock.webhooks.WebhookService;
 
 import java.util.List;
 
@@ -14,23 +17,33 @@ import java.util.List;
 @Service
 public class CheckoutPaymentsService {
 
-    public PaymentResponse processPayment(PaymentRequest paymentRequest) {
-        log.info("Processing the request...");
-        return buildResponse();
+    private final WebhookService webhookService;
+    private final PaymentMethodTypeRepository paymentMethodTypeRepository;
+    private final PaymentMethodMapper paymentMethodTypeMapper;
+
+    public CheckoutPaymentsService(WebhookService webhookService, PaymentMethodTypeRepository paymentMethodTypeRepository, PaymentMethodMapper paymentMethodTypeMapper) {
+        this.webhookService = webhookService;
+        this.paymentMethodTypeRepository = paymentMethodTypeRepository;
+        this.paymentMethodTypeMapper = paymentMethodTypeMapper;
     }
 
-    public List<PaymentMethod> getAvailablePaymentMethods(PaymentMethodRequest request) {
-        log.info("paymentMethod={}", request);
-        PaymentMethod cardMethod = new PaymentMethod("Cards", "scheme");
-        PaymentMethod paypalMethod = new PaymentMethod("PayPal", "paypal");
-        return List.of(cardMethod, paypalMethod);
+    public PaymentResponse processPayment(PaymentRequest request) {
+        log.info("Processing payment request {}", request.getReference());
+        webhookService.createWebhook(request);
+        return buildResponse(request);
     }
 
-    private PaymentResponse buildResponse() {
+    public List<PaymentMethod> getAvailablePaymentMethods(PaymentMethod request) {
+        log.info("Retrieving payment methods configured for merchant={}", request.getMerchantAccount());
+        List<PaymentMethodEntity> paymentMethodTypeEntities = paymentMethodTypeRepository.findAll();
+        return paymentMethodTypeEntities.stream().map(paymentMethodTypeMapper::fromEntity).toList();
+    }
+
+    private PaymentResponse buildResponse(PaymentRequest request) {
         return PaymentResponse.builder()
-                .pspReference("993617895215577D")
-                .resultCode("Authorised")
-                .merchantReference("merchant")
+                .pspReference(request.getReference())
+                .resultCode(PaymentStatus.AUTHORIZED.getDescription())
+                .merchantReference(request.getMerchantAccount())
                 .additionalData(buildAdditionalData())
                 .build();
     }
@@ -41,7 +54,7 @@ public class CheckoutPaymentsService {
                 .authCode("065696")
                 .avsResult("4 AVS not supported for this card type")
                 .avsResultRaw("4")
-                .refusalReasonRaw("AUTHORISED")
+                .refusalReasonRaw(PaymentStatus.AUTHORIZED.name())
                 .acquirerCode("TestPmmAcquirer")
                 .acquirerReference("8PQMP9VIE9N")
                 .build();
